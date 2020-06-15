@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>__::Dice Game::__</title>
+<style type="text/css">
+	.header{
+			height: 30px;
+			text-align: center;
+			color: white;
+			background-color: grey
+		}
+		.container{
+		   width:  360px;
+		   height: 600px;
+		   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+		   justify-content: center;
+		   position: absolute;
+		   background: white;
+		   color: white;
+		   display: inline-block;
+		   top: 50%;
+		    left: 50%;
+		    margin-right: -50%;
+		    transform: translate(-50%, -50%)
+		}
+		.btn{
+    width: 260px;
+    height: 40px;
+    background: #3498db;
+    border-radius: 10px;
+    margin: 10px auto;
+    display: block;
+    font-family: "Montserrat",sans-serif;
+    font-size: 16px;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+.input-container{
+    width: 260px;
+    height: 40px;
+    background: #f1f1f1b3;
+    border-radius: 10px;
+    margin: 10px auto;
+}
+.input-container input{
+    background: none;
+    border: none;
+    outline: none;
+    text-align: center;
+    width: 90%;
+    line-height: 37px;
+    font-family: "Montserrat",sans-serif;
+    font-size: 14px;
+    color: #333;
+}
+.game-container{
+	margin-top: 30px; 
+}
+.lebel{
+	padding-top: 30px;
+	border-radius: 5%;
+	background: #73AD21;
+	padding: 20px;
+	width: 70px;
+	height: 25px;
+	position: relative;
+	justify-content: center;
+	margin: auto;
+}
+.lebel h2{
+text-align: center;
+margin: auto;
+color: black;
+float: left;
+display: inline;
+width: 49%
+}
+.connect-lebel{
+padding-top: 30px;
+margin-top: 20px;
+	border-radius: 5%;
+	padding: 20px;
+	width: 340px;
+	height: 15px;
+	position: relative;
+	justify-content: center;
+	margin: auto;
+}
+.disconnect-lebel{
+	padding-top: 30px;
+	margin-top: 20px;
+	border-radius: 5%;
+	padding: 20px;
+	width: 340px;
+	height: 15px;
+	position: relative;
+	justify-content: center;
+	margin: auto;
+}
+.connect-lebel h4{
+text-align: center;
+color:black;
+margin: auto;
+}
+.disconnect-lebel h4{
+text-align: center;
+color:black;
+margin: auto;
+}
+.result-lebel{
+	padding-top: 30px;
+	border-radius: 50%;
+	background: #73AD21;
+	padding: 20px;
+	width: 35px;
+	height: 35px;
+	position: relative;
+	justify-content: center;
+	margin: auto;
+}
+.result-lebel h5{
+	text-align: center;
+   margin: auto;
+}
+.dollar{
+   margin: auto;
+   font-weight: bolder;
+   font-size: 30px;
+   float: left;
+display: inline;
+width: 49%
+}
+</style>
+</head>
+<body>
+  	<div class="container">
+
+		<div class="header">
+			<h3>Toast The Dice</h3>
+		</div>
+
+		<div class="game-container">
+		
+		<form action="">
+				<div class="input-container">
+			 <input id="betAmount" type="text" placeholder="Enter Bet amount">
+			</div>
+			<div class="input-container">
+			 <input  id ="betValue" type="text" placeholder="Please Enter Bet Value"> 
+			</div>
+			 <input class="btn" type="submit"  value ="Toast Dice">	
+			</form>
+
+			<div class="lebel">
+					<h2 id="investAmount"></h2>
+			</div>
+
+			<div class=" connect-lebel">
+				<h4 id="connectID"></h4>
+			</div>
+			<div class="disconnect-lebel">
+				<h4 id="DisconnectID"></h4>
+			</div>
+
+			<div class="result-lebel">
+				<h5 id="resultID">You Won</h5>
+			</div>
+		</div>
+
+ 		
+</div>
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+   <script>
+   /*	$(function () {*/
+   	let socket = io();
+   	  socket.on('login', (userID) =>{
+      document.getElementById("connectID").innerHTML = userID;
+    });
+      socket.on('invest_amount',(investAmount)=>{
+      	document.getElementById("investAmount").innerHTML = investAmount;
+      })
+      socket.on('leave',(leaveID) =>{
+      	document.getElementById("DisconnectID").innerHTML = leaveID;
+      })
+  /* 	});*/
+   </script>
+</body>
+</html>
