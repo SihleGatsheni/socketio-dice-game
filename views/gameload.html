@@ -162,15 +162,24 @@ margin: auto;
 
  		
 </div>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
    <script>
-   	let socket = io();
-      socket.on('login', (userID) =>{
-      document.getElementById("showtimer").innerHTML = userID;
-    });
-      socket.on('leave',(leaveID) =>{
-      	document.getElementById("showtimer").innerHTML = leaveID;
-      })
+   	$(function() {
+   		let socket = io();
+   		$('form').submit(function(e){
+   			e.preventDefault();
+   			
+   			socket.on('login', (userID) =>{
+      		document.getElementById("showtimer").innerHTML = userID;
+    					});
+
+		      socket.on('leave',(leaveID) =>{
+		      	document.getElementById("showtimer").innerHTML = leaveID;
+		      })
+
+	   	})
+	  });
    </script>
 </body>
-</html>
+</html

@@ -6,8 +6,10 @@ const bodyParser = require('body-parser');
 const game_route = require('./routes/game');
 
 //declare global variables
-let counter =1000;
-let investAmount = 100;
+//let counter =1000;
+var investAmount = 100;
+const betRate = 0.60;
+let userAmount;
 
 const app = express();
 
@@ -40,17 +42,46 @@ io.on('connect', (socket) =>{
 	io.emit('login',userID)
 	console.log(`${userID} :Has Been Connected.`);
 	
-    /*setInterval(function(){
-	let rand = (Math.floor((Math.random()*20)+1))
-	 io.emit('showtimer',rand);
-     }, 2000);
-     */
+		function diceToast(){
+			//let dice1 = (Math.floor((Math.random()*6)+1))
+			let dice2 = (Math.floor((Math.random()*2)+1))
+		    //let diceSum = dice1 + dice2;
+		    
+		    return dice2;
+		}
 
-		/*setInterval(function(){
-		let stream = counter -=1;
-		 io.emit('counter',stream);
-		},2000);*/
     io.emit('invest_amount',investAmount);
+    socket.on('amount', (amount) =>{
+    	console.log(amount);
+    	//let stream_amount = investAmount -amount;
+        //io.emit('amount',stream_amount);
+        	
+
+
+    socket.on('bet', (bet) =>{
+    	console.log('user bet number: ',bet);
+    	let dicet_T = diceToast()
+    	console.log('generated number: ',dicet_T);
+    	if(dicet_T == bet){
+    		userAmount =amount;
+    		let win = (investAmount + (userAmount * betRate));
+    		let b = 'Won'
+    		io.emit('won', b);
+    		io.emit('win', win);
+    		console.log(`you have won: R${userAmount*betRate} and Total amount: R${win}`);
+    		
+    	}else if(diceToast() !== bet){
+    		let a = 'Lose'
+    		io.emit('lose', a);
+    		console.log('you lost')
+    		stream_amount = investAmount -amount;
+    		console.log('Amount left: ',stream_amount);
+    		io.emit('amount', stream_amount);
+    	}	
+
+    });
+    	
+    })
 
 	socket.on('disconnect', () => {
 		io.emit('leave', leaveID)
@@ -58,4 +89,3 @@ io.on('connect', (socket) =>{
   });
 
 });
-
